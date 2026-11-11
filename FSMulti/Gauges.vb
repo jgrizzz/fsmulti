@@ -1,0 +1,79 @@
+﻿Public Class Gauges
+
+    Private dragging As Boolean
+    Private offset As Point
+    Private Sub Monitor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
+        Timer1.Enabled = True
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        txtALT.Text = ALTINFO
+        txtIAS.Text = IASINFO
+        txtGALT.Text = GALTINFO
+        txtHEAD.Text = HEADINFO
+        txtBARO.Text = BAROINFO
+        txtFuel.Text = FUELINFO
+        txtFuelMax.Text = FUELCAPACITY
+        txtPlanLat.Text = PLANELAT
+        txtPlaneLon.Text = PLANELON
+
+
+    End Sub
+
+    Private Sub Monitor_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        Timer1.Enabled = False
+        Monitor_Panel = False
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnExit.Click
+        Me.Dispose()
+        Monitor_Panel = False
+    End Sub
+
+    Private Sub Monitor_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
+
+    End Sub
+
+#Region " Move Form "
+
+    ' [ Move Form ]
+    '
+    ' // By Elektro 
+
+    Public MoveForm As Boolean
+    Public MoveForm_MousePosition As Point
+
+    Public Sub MoveForm_MouseDown(sender As Object, e As MouseEventArgs) Handles _
+    MyBase.MouseDown ' Add more handles here (Example: PictureBox1.MouseDown)
+
+        If e.Button = MouseButtons.Left Then
+            MoveForm = True
+            Me.Cursor = Cursors.NoMove2D
+            MoveForm_MousePosition = e.Location
+        End If
+
+    End Sub
+
+    Public Sub MoveForm_MouseMove(sender As Object, e As MouseEventArgs) Handles _
+    MyBase.MouseMove ' Add more handles here (Example: PictureBox1.MouseMove)
+
+        If MoveForm Then
+            Me.Location = Me.Location + (e.Location - MoveForm_MousePosition)
+        End If
+
+    End Sub
+
+    Public Sub MoveForm_MouseUp(sender As Object, e As MouseEventArgs) Handles _
+    MyBase.MouseUp ' Add more handles here (Example: PictureBox1.MouseUp)
+
+        If e.Button = MouseButtons.Left Then
+            MoveForm = False
+            Me.Cursor = Cursors.Default
+        End If
+
+    End Sub
+
+#End Region
+End Class
